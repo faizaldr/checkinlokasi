@@ -1,3 +1,4 @@
+import 'package:checkinlokasi/modules/login/pages/login.dart';
 import 'package:flutter/material.dart';
 
 class Orang{
@@ -39,12 +40,13 @@ class MyApp extends StatelessWidget{
             foregroundColor: Colors.white,
           )
       ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("Page 1"),
-        ),
-        body: Container(),
-      ), //home adalah default tampilan ketika pertama kali aplikasi dibuka
+      home: LoginPage()
+      // Scaffold(
+      //   appBar: AppBar(
+      //     title: Text("Page 1"),
+      //   ),
+      //   body: Container(),
+      // ), //home adalah default tampilan ketika pertama kali aplikasi dibuka
     );
   }
 
