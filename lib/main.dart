@@ -6,6 +6,7 @@ class Orang{
   // Orang(this.nama, this.alamat);
   Orang({this.nama, this.alamat}); //kurung kurawal berarti parameter opsional
 }
+
 void main() {
   // new Orang("badu");
   Orang(alamat: "jogja");
