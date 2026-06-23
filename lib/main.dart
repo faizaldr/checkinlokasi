@@ -8,21 +8,43 @@ class Orang{
 }
 void main() {
   // new Orang("badu");
-  new Orang(alamat: "jogja");
+  Orang(alamat: "jogja");
   runApp(
-      new MaterialApp( //mengkonfigurasi di area sebuah aplikasi
-        theme: ThemeData(
+    MyApp()
+      // new MaterialApp( //mengkonfigurasi di area sebuah aplikasi
+      //   theme: ThemeData(
+      //     appBarTheme: AppBarTheme(
+      //       backgroundColor: Colors.orange,
+      //       foregroundColor: Colors.white,
+      //     )
+      //   ),
+      //   home: Scaffold(
+      //     appBar: AppBar(
+      //       title: Text("Page 1"),
+      //     ),
+      //     body: Container(),
+      //   ), //home adalah default tampilan ketika pertama kali aplikasi dibuka
+      // )
+  );
+}
+
+class MyApp extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp( //mengkonfigurasi di area sebuah aplikasi
+      theme: ThemeData(
           appBarTheme: AppBarTheme(
             backgroundColor: Colors.orange,
             foregroundColor: Colors.white,
           )
+      ),
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text("Page 1"),
         ),
-        home: Scaffold(
-          appBar: AppBar(
-            title: Text("Page 1"),
-          ),
-          body: Container(),
-        ), //home adalah default tampilan ketika pertama kali aplikasi dibuka
-      )
-  );
+        body: Container(),
+      ), //home adalah default tampilan ketika pertama kali aplikasi dibuka
+    );
+  }
+
 }
