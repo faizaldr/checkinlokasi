@@ -11,6 +11,10 @@ int usia = 12;
 String? alamat;
 var a;
 
+// bisa jika variable diassign sebagai late
+// (telat meng-inisialisasi nilai):
+late int nilai;
+
 void main(){
   alamat="sidoarjo";
   //tidak boleh mengubah usia menjadi null karena bukan nullable
@@ -21,4 +25,6 @@ void main(){
   print(a.runtimeType);
   print('Hallo World, $nama ');
   print(alamat);
+  nilai = 100;
+  print(nilai);
 }
