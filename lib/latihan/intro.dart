@@ -22,7 +22,7 @@ void main(){
 
   a = 'lulus SD';
   a = 12;
-  print(a.runtimeType);
+  print(a.runtimeType); //melihat tipe data
   print('Hallo World, $nama ');
   print(alamat);
   nilai = 100;
