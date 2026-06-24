@@ -56,8 +56,7 @@ class _LoginPageState extends State<LoginPage> {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text("Login Berhasil : ${loginResponse.user!.username}")));
     }else{
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text("Login Gagal")));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Login Gagal")));
     }
   }
 }
