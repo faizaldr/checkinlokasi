@@ -43,7 +43,10 @@ class _LocationPageState extends State<LocationPage> {
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       Text(data.comment!),
-
+                      Text(
+                        "${data.latitude!} , ${data.longitude!}",
+                        textAlign: TextAlign.left,
+                      ),
                     ],
                   ),
                 );
