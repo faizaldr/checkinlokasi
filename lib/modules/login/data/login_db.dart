@@ -28,21 +28,18 @@ class LoginDb {
     final db = await database;
     return await db.insert("tokens", {'token': token});
   }
-
   Future<String?> getToken() async {
     final db = await database;
-    final List<Map<String, dynamic>> maps = await db.query('token', limit: 1);
+    final List<Map<String, dynamic>> maps = await db.query('tokens', limit: 1);
     if (maps.isNotEmpty) {
       return (maps.first)['token'] as String;
     }
     return null;
   }
-
   Future<int> updateToken(String token) async {
     final db = await database;
     return await db.update('tokens', {'token': token});
   }
-
   Future<int> deleteToken(String token) async {
     final db = await database;
     return await db.delete('tokens');
