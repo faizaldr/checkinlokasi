@@ -34,6 +34,7 @@ class User {
   String? updatedAt;
   String? publishedAt;
 
+
   User(
       {this.id,
         this.documentId,
