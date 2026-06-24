@@ -24,20 +24,40 @@ class _LoginPageState extends State<LoginPage> {
           SizedBox(height: 20),
           TextFormField(
             controller: _userC,
-            decoration: InputDecoration(labelText: "username", border: OutlineInputBorder()),
+            decoration: InputDecoration(
+              labelText: "username",
+              border: OutlineInputBorder(),
+            ),
           ),
           SizedBox(height: 20),
-          TextFormField(controller: _passwordC, obscureText: true),
+          TextFormField(
+            controller: _passwordC,
+            obscureText: true,
+            decoration: InputDecoration(
+              labelText: "password",
+              border: OutlineInputBorder(),
+            ),
+          ),
           SizedBox(height: 20),
           ElevatedButton.icon(
-            onPressed: () {
-              print(LoginApi().login("a@a.com", "123123"));
-            },
+            onPressed: _handleLogin,
             label: Text("LOGIN"),
             icon: Icon(Icons.login),
           ),
         ],
       ),
     );
+  }
+  void _handleLogin() async {
+    final username = _userC.text.trim();
+    final password = _passwordC.text;
+    final loginResponse = await LoginApi().login(username, password);
+    if (loginResponse != null) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text("Login Berhasil : ${loginResponse.user!.username}")));
+    }else{
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text("Login Gagal")));
+    }
   }
 }
