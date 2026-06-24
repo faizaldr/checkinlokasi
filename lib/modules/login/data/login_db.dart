@@ -18,7 +18,7 @@ class LoginDb {
       version: 1,
       onCreate: (db, version) async {
         await db.execute(
-          "CREATE TABLE tokens (id INTEGER PRUMARY KEY AUTOINCREMENT, token TEXT) ",
+          "CREATE TABLE tokens (id INTEGER PRIMARY KEY AUTOINCREMENT, token TEXT) ",
         );
       },
     );
