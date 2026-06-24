@@ -1,3 +1,4 @@
+import 'package:checkinlokasi/modules/location/pages/location.dart';
 import 'package:checkinlokasi/modules/login/data/login_api.dart';
 import 'package:checkinlokasi/modules/login/data/login_db.dart';
 import 'package:flutter/material.dart';
@@ -49,16 +50,24 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+
   void _handleLogin() async {
     final username = _userC.text.trim();
     final password = _passwordC.text;
     final loginResponse = await LoginApi().login(username, password);
     if (loginResponse != null) {
       await LoginDb().saveToken(loginResponse.jwt!);
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text("Login Berhasil : ${loginResponse.user!.username}")));
-    }else{
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Login Gagal")));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Login Berhasil : ${loginResponse.user!.username}"),
+        ),
+      );
+      Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => LocationPage()));
+    } else {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Login Gagal")));
     }
   }
 }
