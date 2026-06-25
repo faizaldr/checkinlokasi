@@ -63,7 +63,50 @@ class LocationApi {
       );
       return response.statusCode == 200 || response.statusCode == 201;
     } catch (e) {
-      print(e.toString());return false;
+      print(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> updateLocation({
+    required String id,
+    required String placeName,
+    required String placeType,
+    required String comment,
+    required double latitude,
+    required double longitude,
+  }) async {
+    try {
+      final response = await http.post(
+        Uri.parse(BASE_TRACKING_URL + "/$id"),
+        headers: await _getHeaders(),
+        body: jsonEncode({
+          "data": {
+            "placeName": placeName,
+            "placeType": placeType,
+            "comment": comment,
+            "latitude": latitude,
+            "longitude": longitude,
+          },
+        }),
+      );
+      return response.statusCode == 200 || response.statusCode == 201;
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> deleteLocation(String id) async {
+    try {
+      final response = await http.post(
+        Uri.parse(BASE_TRACKING_URL + "/$id"),
+        headers: await _getHeaders(),
+      );
+      return response.statusCode == 204;
+    } catch (e) {
+      print(e.toString());
+      return false;
     }
   }
 }
