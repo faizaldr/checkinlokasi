@@ -21,7 +21,7 @@ class LocationApi {
   }
 
   Future<LocationResponse?> getLocations() async {
-    // try {
+    try {
       final response = await http.get(
         Uri.parse(BASE_TRACKING_URL),
         headers: await _getHeaders(),
@@ -32,9 +32,9 @@ class LocationApi {
       }else{
         return null;
       }
-    // } catch (e) {
-    //   print(e.toString());
-    //   return null;
-    // }
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
   }
 }
