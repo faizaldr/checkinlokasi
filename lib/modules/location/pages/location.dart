@@ -44,19 +44,65 @@ class _LocationPageState extends State<LocationPage> {
               itemCount: _locationResponse!.data!.length,
               itemBuilder: (context, index) {
                 var data = _locationResponse!.data![index];
-                return Card(
-                  child: Column(
-                    children: [
-                      Text(
-                        "${data.placeName!} (${data.placeType!})",
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                return InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            LocationFormPage(locationData: data),
                       ),
-                      Text(data.comment!),
-                      Text(
-                        "${data.latitude!} , ${data.longitude!}",
-                        textAlign: TextAlign.left,
+                    );
+                  },
+                  onLongPress: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: Text("Hapus ${data.placeName} ?"),
+                        actions: [
+                          TextButton(
+                            child: Text("Ya"),
+                            onPressed: () async {
+                              bool success = await LocationApi().deleteLocation(
+                                data.documentId!,
+                              );
+                              if (success) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text("Lokasi berhasil dihapus"),
+                                  ),
+                                );
+                                Navigator.of(context).pop(true);
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text("Gagal hapus Lokasi")),
+                                );
+                              }
+                            },
+                          ),
+                          TextButton(
+                            child: Text("Tidak"),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
                       ),
-                    ],
+                    );
+                  },
+                  child: Card(
+                    child: Column(
+                      children: [
+                        Text(
+                          "${data.placeName!} (${data.placeType!})",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Text(data.comment!),
+                        Text(
+                          "${data.latitude!} , ${data.longitude!}",
+                          textAlign: TextAlign.left,
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },
