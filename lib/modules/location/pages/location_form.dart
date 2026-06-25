@@ -135,6 +135,15 @@ class _LocationFormPageState extends State<LocationFormPage> {
         latitude: latitude,
         longitude: longitude,
       );
+    }else{
+      success = await LocationApi().updateLocation(
+        id: widget.locationData!.documentId!,
+        placeName: placeName,
+        placeType: placeType,
+        comment: comment,
+        latitude: latitude,
+        longitude: longitude,
+      );
     }
     if (success) {
       ScaffoldMessenger.of(context).showSnackBar(
