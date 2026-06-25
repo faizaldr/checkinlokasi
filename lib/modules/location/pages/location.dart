@@ -1,5 +1,6 @@
 import 'package:checkinlokasi/modules/location/data/location_api.dart';
 import 'package:checkinlokasi/modules/location/models/location_response_model.dart';
+import 'package:checkinlokasi/modules/location/pages/location_form.dart';
 import 'package:flutter/material.dart';
 
 class LocationPage extends StatefulWidget {
@@ -29,6 +30,14 @@ class _LocationPageState extends State<LocationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Lokasi")),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          Navigator.of(
+            context,
+          ).push(MaterialPageRoute(builder: (context) => LocationFormPage()));
+        },
+      ),
       body: _locationResponse == null
           ? Center(child: CircularProgressIndicator())
           : ListView.builder(

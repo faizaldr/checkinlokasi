@@ -1,6 +1,7 @@
 // ubah main.dart -> home: LocationFormPage()
 import 'dart:async';
 
+import 'package:checkinlokasi/modules/location/data/location_api.dart';
 import 'package:checkinlokasi/modules/location/services/location_service.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
@@ -58,7 +59,9 @@ class _LocationFormPageState extends State<LocationFormPage> {
       print(e.toString());
     }
   }
+
   bool get _isEdit => widget.locationData != null;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,10 +79,78 @@ class _LocationFormPageState extends State<LocationFormPage> {
                   border: OutlineInputBorder(),
                 ),
               ),
+              TextFormField(
+                controller: _placeTypeC,
+                decoration: InputDecoration(
+                  labelText: "Tipe Lokasi",
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              TextFormField(
+                controller: _commentC,
+                decoration: InputDecoration(
+                  labelText: "Komentar",
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              TextFormField(
+                controller: _latitudeC,
+                enabled: false,
+                decoration: InputDecoration(
+                  labelText: "Latitude",
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              TextFormField(
+                controller: _longitudeC,
+                enabled: false,
+                decoration: InputDecoration(
+                  labelText: "Longitude",
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              ElevatedButton(
+                onPressed: _submit,
+                child: Text(_isEdit ? "SIMPAN PERUBAHAN" : "TAMBAH LOKASI"),
+              ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  _submit() async {
+    final placeName = _placeNameC.text.trim();
+    final placeType = _placeTypeC.text.trim();
+    final comment = _commentC.text.trim();
+    final latitude = double.tryParse(_latitudeC.text.trim()) ?? 0.0;
+    final longitude = double.tryParse(_longitudeC.text.trim()) ?? 0.0;
+    bool success = false;
+    if (!_isEdit) {
+      success = await LocationApi().addLocation(
+        placeName: placeName,
+        placeType: placeType,
+        comment: comment,
+        latitude: latitude,
+        longitude: longitude,
+      );
+    }
+    if (success) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            _isEdit
+                ? "Lokasi berhasil diperbarui"
+                : "Lokasi berhasil ditambahkan",
+          ),
+        ),
+      );
+      Navigator.of(context).pop(true);
+    } else {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Gagal Menyimpan Lokasi")));
+    }
   }
 }

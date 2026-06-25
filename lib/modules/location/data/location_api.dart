@@ -26,15 +26,44 @@ class LocationApi {
         Uri.parse(BASE_TRACKING_URL),
         headers: await _getHeaders(),
       );
-      if(response.statusCode == 200){
-        final Map<String, dynamic> responseData= jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData = jsonDecode(response.body);
         return LocationResponse.fromJson(responseData);
-      }else{
+      } else {
         return null;
       }
     } catch (e) {
       print(e.toString());
       return null;
+    }
+  }
+
+  Future<bool> addLocation({
+    required String placeName,
+    required String placeType,
+    required String comment,
+    required double latitude,
+    required double longitude,
+  }) async {
+    try {
+      final response = await http.post(
+        Uri.parse(
+          BASE_TRACKING_URL /* +"?tindakan=simpan&placeName=$placeName" */,
+        ),
+        headers: await _getHeaders(),
+        body: jsonEncode({
+          "data": {
+            "placeName": placeName,
+            "placeType": placeType,
+            "comment": comment,
+            "latitude": latitude,
+            "longitude": longitude,
+          },
+        }),
+      );
+      return response.statusCode == 200 || response.statusCode == 201;
+    } catch (e) {
+      print(e.toString());return false;
     }
   }
 }
