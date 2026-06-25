@@ -77,7 +77,7 @@ class LocationApi {
     required double longitude,
   }) async {
     try {
-      final response = await http.post(
+      final response = await http.put(
         Uri.parse(BASE_TRACKING_URL + "/$id"),
         headers: await _getHeaders(),
         body: jsonEncode({
@@ -99,7 +99,7 @@ class LocationApi {
 
   Future<bool> deleteLocation(String id) async {
     try {
-      final response = await http.post(
+      final response = await http.delete(
         Uri.parse(BASE_TRACKING_URL + "/$id"),
         headers: await _getHeaders(),
       );

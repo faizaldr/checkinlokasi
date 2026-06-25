@@ -62,6 +62,7 @@ class _LocationPageState extends State<LocationPage> {
                           TextButton(
                             child: Text("Ya"),
                             onPressed: () async {
+                              print(data.documentId!);
                               bool success = await LocationApi().deleteLocation(
                                 data.documentId!,
                               );
