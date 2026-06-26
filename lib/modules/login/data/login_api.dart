@@ -22,4 +22,20 @@ class LoginApi {
       return null;
     }
   }
+
+  Future<LoginResponse?> loginWithGoogle({String? idToken, String? accessToken}) async {
+    try {
+      final response = await http.post(
+        Uri.parse(AUTH_GOOGLE_MOBILE_URL),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({"idToken": idToken, "accessToken": accessToken}),
+      );
+      if (response.statusCode == 200) {
+        return LoginResponse.fromJson(jsonDecode(response.body));
+      }
+    } catch (e) {
+      // Ignore
+    }
+    return null;
+  }
 }

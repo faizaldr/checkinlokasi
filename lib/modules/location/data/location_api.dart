@@ -5,6 +5,7 @@ import 'package:checkinlokasi/modules/location/models/location_response_model.da
 import 'package:checkinlokasi/modules/login/data/login_db.dart';
 import 'package:http/http.dart' as http;
 
+
 class LocationApi {
   final LoginDb _loginDb = LoginDb();
 

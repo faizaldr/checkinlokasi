@@ -2,6 +2,7 @@
 import 'dart:async';
 
 import 'package:checkinlokasi/modules/location/data/location_api.dart';
+import 'package:checkinlokasi/modules/location/pages/liveness_page.dart';
 import 'package:checkinlokasi/modules/location/services/location_service.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
@@ -121,6 +122,22 @@ class _LocationFormPageState extends State<LocationFormPage> {
   }
 
   _submit() async {
+
+    final bool? livenessSuccess = await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const LivenessPage(),
+      ),
+    );
+
+    if (livenessSuccess != true) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Gagal menyimpan lokasi: Verifikasi Wajah gagal.")),
+        );
+      }
+      return;
+    }
+
     final placeName = _placeNameC.text.trim();
     final placeType = _placeTypeC.text.trim();
     final comment = _commentC.text.trim();

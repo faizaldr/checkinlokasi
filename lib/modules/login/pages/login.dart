@@ -2,6 +2,7 @@ import 'package:checkinlokasi/modules/location/pages/location.dart';
 import 'package:checkinlokasi/modules/login/data/login_api.dart';
 import 'package:checkinlokasi/modules/login/data/login_db.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -46,6 +47,12 @@ class _LoginPageState extends State<LoginPage> {
             label: Text("LOGIN"),
             icon: Icon(Icons.login),
           ),
+          SizedBox(height: 10),
+          ElevatedButton.icon(
+            onPressed: _handleGoogleLogin,
+            label: Text("LOGIN WITH GOOGLE"),
+            icon: Icon(Icons.account_circle_sharp),
+          ),
         ],
       ),
     );
@@ -68,6 +75,41 @@ class _LoginPageState extends State<LoginPage> {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text("Login Gagal")));
+    }
+  }
+
+  void _handleGoogleLogin() async {
+    try {
+      final googleUser = await GoogleSignIn().signIn();
+      if (googleUser == null) return;
+      final auth = await googleUser.authentication;
+      final loginResponse = await LoginApi().loginWithGoogle(
+        idToken: auth.idToken,
+        accessToken: auth.accessToken,
+      );
+      print("Login Response Data: ${loginResponse?.toJson()}");
+      if (loginResponse != null) {
+        await LoginDb().saveToken(loginResponse.jwt!);
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("Login Berhasil : ${loginResponse.user!.username}")),
+          );
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => LocationPage()));
+        }
+      } else {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("Login Gagal")),
+          );
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Error: $e")),
+        );
+      }
     }
   }
 }
